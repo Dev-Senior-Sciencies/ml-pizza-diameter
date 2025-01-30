@@ -1,48 +1,8 @@
-import os
-import pandas as pd
-from sklearn.model_selection import train_test_split
+parameters:
+  n_estimators: 100  # Número de árvores no RandomForest
+  max_depth: 10      # Profundidade máxima da árvore
+  random_state: 23   # Semente para reprodutibilidade
+  verbose: 0         # Nível de verbosidade do modelo
 
-# Path to train.py
-file_path = os.getcwd()
-
-# Read configuration file
-conf = OmegaConf.load(os.path.join(file_path, "..", "src", "config.yml"))
-
-# Load data
-data_path = os.path.join(file_path, "..", "data", ".csv")
-
-df = pd.read_csv(data_path)
-
-def train(df, params):
-    with mlflow.start_run():
-
-        # Get features and target name
-        features = df.iloc[:, 0:-1].values
-
-        target = df.iloc[:, -1].values
-
-        # Train test split
-        df_train, df_test, dfy_train, dfy_test  = train_test_split(features, target, test_size=0.3, random_state=0)
-
-        print("Tamanhos dos conjuntos de treino e teste:")
-        print("Treino:", df_train.shape, dfy_train.shape)
-        print("Teste:", df_test.shape, dfy_test.shape)
-        
-        # Normalizar os dados
-        # model = StandardScaler()
-
-        # df_train = model.fit_transform(df_train)
-
-        # Train mode
-
-        # Evaluate
-
-
-def main():
-
-    # Train model
-    train(df, conf["parameters"])
-
-
-if __name__ == "__main__":
-    main()
+tracking_uri:
+  experiment_name: "pizza-diameter" 
