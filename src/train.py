@@ -7,8 +7,8 @@ from sklearn.preprocessing import StandardScaler
 from omegaconf import OmegaConf
 import mlflow
 
-file_path = os.getcwd()
-conf = OmegaConf.load(os.path.join(file_path, "..", "src", "config.yml"))
+file_path = os.path.dirname(__file__)
+conf = OmegaConf.load(os.path.join(file_path, "config.yml"))
 mlflow.set_experiment(conf["tracking_uri"]["experiment_name"])
 
 data_path = os.path.join(file_path, "..", "data", "pizzas-diameter.csv")
